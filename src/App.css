@@ -36,3 +36,41 @@
     transform: rotate(360deg);
   }
 }
+
+.top{
+  height: 100px;
+  width: 98.5%;
+  border: 2px solid black;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: black;
+}
+
+.container{
+  display: flex;
+}
+
+.bottom{
+  height: 570px;
+  width: 70%;
+  border: 2px solid black;
+  margin: auto;
+  background-color: black;
+}
+
+.left{
+  height: 570px;
+  width: 13%;
+  border: 2px solid black;
+  margin: auto;
+  background-color: black;
+}
+
+.right{
+  height: 570px;
+  width: 13%;
+  border: 2px solid black;
+  margin: auto;
+  background-color: black;
+}
