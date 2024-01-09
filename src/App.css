@@ -47,6 +47,12 @@
   background-color: black;
 }
 
+input{
+  margin-top: 30px;
+  border: 2px solid black;
+  border-radius: 4px;
+}
+
 .container{
   display: flex;
 }
@@ -73,4 +79,11 @@
   border: 2px solid black;
   margin: auto;
   background-color: black;
+}
+
+.form{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 50px;
 }

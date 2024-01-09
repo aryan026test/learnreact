@@ -1,9 +1,25 @@
+import { useState } from "react";
+
 function Top(prop){
+    const [color, setColor] = useState("")
+    const [finalColor, setFinalColor] = useState(prop.color)
+    const handleClick = ()=>{
+        setFinalColor((prev)=>{
+            return color;
+        })
+    }
+    const handleColorChange = (event)=>{
+        // console.log(event.target.value)
+        setColor((prev)=>{
+            return event.target.value;
+        })
+    }
     return (
         <div className="top" style={{
-            backgroundColor: prop.color
+            backgroundColor: finalColor
         }}>
-            <h1>TOP</h1>
+            <input value={color} onChange={handleColorChange}/>
+            <button onClick={handleClick}>click me</button>
         </div>
     );
 }
