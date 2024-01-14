@@ -15,7 +15,7 @@ function Box(prop){
         })
     }
 
-    console.log(prop.info.margin)
+    // console.log(prop.info.margin)
 
     return (
         <div style={{
