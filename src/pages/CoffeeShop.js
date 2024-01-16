@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Coffee from '../images/expresso.jpg'
 import Card from '../components/Card'
 
-const CoffeeShop = () => {
+const CoffeeShop = (prop) => {
+  const {value} = prop
+  const {ItemsNumber,setItemsNumber} = value
 
-  const i = [
+  const [toggleView, setToggleView] = useState(false)
+
+  const CoffeeInfo = [
     {
       img: Coffee,
       text: "Espresso",
@@ -13,31 +17,48 @@ const CoffeeShop = () => {
     },
     {
       img: Coffee,
-      text: "Expresso",
-      description: "This is a coffee type.",
+      text: "Double Espresso",
+      description: "A double espresso may also be listed as doppio, which is the Italian word for double. This drink is highly concentrated and strong.",
       price: "5 RS/- ",
     },
     {
       img: Coffee,
       text: "Expresso",
-      description: "This is a coffee type.",
+      description: "The espresso, also known as a short black, is approximately 1 oz. of highly concentrated coffee. Although simple in appearance, it can be difficult to master.",
       price: "5 RS/- ",
     },
     {
       img: Coffee,
       text: "Expresso",
-      description: "This is a coffee type.",
+      description: "The espresso, also known as a short black, is approximately 1 oz. of highly concentrated coffee. Although simple in appearance, it can be difficult to master.",
       price: "5 RS/- ",
     },
   ]
 
-  const b = i.map((element, index)=>{
-    return <Card info={element} key={index} />
+  const CoffeeList = CoffeeInfo.map((element, index)=>{
+    return <Card view={toggleView} ItemsNumber={ItemsNumber} setItemsNumber={setItemsNumber} info={element} key={index} />
   })
+
+  const ChangeToGrid = ()=>{
+    setToggleView((prev) =>{
+      return false
+    })
+  }
+
+  const ChangeToList = ()=>{
+    setToggleView((prev) =>{
+      return true;
+    })
+  }
+
   return (
     <div>
-      <div className='card_cont'>
-        {b}
+      <div>
+        <button onClick={ChangeToGrid}>Grid View</button>
+        <button onClick={ChangeToList}>List View</button>
+      </div>
+      <div className={toggleView ? "" : "Class-grid"}> 
+        {CoffeeList}
       </div>
     </div>
   )

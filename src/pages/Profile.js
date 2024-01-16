@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../utils/auth'
 
 const Profile = () => {
-    const auth = useAuth()
     const navigate = useNavigate()
+    const auth = useAuth()
     
     const handleLogout = () => {
         auth.logout()
@@ -12,8 +12,7 @@ const Profile = () => {
     }
     return (
         <div>
-            Welcome {auth.user}
-            <button onClick={handleLogout}>Logout</button>
+            Welcome {auth.user}.<button onClick={handleLogout}>Logout</button>
         </div>
     )
 }

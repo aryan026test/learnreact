@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './pages/Navbar.js'
@@ -18,12 +18,15 @@ import { RequireAuth } from './utils/RequireAuth.js';
 const LazyAbout = React.lazy(() => import('./pages/About.js'))
 
 function App() {
+  const [ItemsNumber, setItemsNumber] = useState(0)
+  const [CartItems, setCartItems] = useState("")
+
   return (
     <AuthProvider>
       <div className='App'>
-        <Navbar />
+        <Navbar value={ ItemsNumber }/>
         <Routes>
-          <Route path='/' element={<CoffeeShop />} />
+          <Route path='/' element={<CoffeeShop value={ {ItemsNumber, setItemsNumber, CartItems, setCartItems} }/>} />
           <Route path='about' element={<React.Suspense fallback='Loading...'><LazyAbout /></React.Suspense>}>
             <Route index element={<Featured />}/>
             <Route path='featured' element={<Featured />}/>
@@ -34,15 +37,15 @@ function App() {
             <Route path=':userID' element={<UserDetails />}/>
             <Route path='admin' element={<Admin />}/>
           </Route>
-          <Route path='cart' element={<Cart />}/>
+          <Route path='cart' value={ {CartItems, setCartItems} } element={<Cart />}/>
           <Route path='order-summary' element={<OrderSummary />}/>
           <Route path='*' element={<NoMatch />} />
-          <Route path='profile' element={
+          <Route path='/profile' element={
           <RequireAuth>
             <Profile /> 
           </RequireAuth>
           } />
-          <Route path='login' element={<Login />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
       </div>
     </AuthProvider>
