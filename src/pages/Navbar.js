@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-function Navbar(){
+function Navbar(prop){
     const navLinkStyles = ({ isActive }) =>{
         return {
             fontWeight: isActive ? 'bolder' : 'Normal',
@@ -17,7 +17,17 @@ function Navbar(){
                 <NavLink style={navLinkStyles} to='/profile'><h5>Profile</h5></NavLink>         
                 <NavLink style={navLinkStyles} to='/login'><h5>Login</h5></NavLink>         
             </div>
-            <NavLink style={navLinkStyles} to='/cart'><h6>Cart Icon</h6></NavLink>
+            <div style={{
+                display: 'flex'
+            }}>
+                <NavLink style={navLinkStyles} to='/cart'><h6>Cart Icon</h6></NavLink>
+                <h6 className='textOverCartIcon'>
+                    {/*
+                        here will be the number of items imported added to the cart
+                    */}
+                    {prop.value}
+                </h6>
+            </div>
         </div>
     )
 }

@@ -117,22 +117,20 @@ a{
 
 .card{
   display: flex;
-  justify-content: space-between;
   width: 50%;
-  margin: 16px;
-  /* margin-left: auto; */
+  margin: 16px auto;
   padding: 14px 20px;
   height: 120px;
   border: 2px solid black;
-  /* justify-content: space-evenly; */
 }
 
-.card_cont{
-  width: 100%;
-  display: flex;
+.Class-grid{
+  display: grid;
   justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  grid-template-columns: auto auto auto;
+  column-gap: 50px;
+  gap: 30px;
+  padding: 10px;
 }
 
 img{
@@ -184,4 +182,49 @@ p {
 .users a{
   color: black;
   text-decoration: underline;
+}
+
+.textOverCartIcon{
+  color: white;
+  position: relative;
+  top: -7px;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 50%;
+  padding: 1px 4px;
+}
+
+.grid-item{
+  display: grid;
+  border: 2px solid black;
+  width: 260px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  border-radius: 5px;
+  height: 500px;
+  /* padding: 10px; */
+}
+
+.grid-item img{
+  width: 100%;
+  border-radius: 0%;
+  height: 200px;
+}
+
+.grid-item p{
+  padding: 2px;
+  text-align: left;
+  top: 10px;
+}
+
+.grid-item .desc{
+  color: rgb(72, 70, 70);
+  margin-top: 5px;
+  padding: 10px;
+  text-align: left;
+}
+
+.grid-item .priceAndIcon{
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
 }

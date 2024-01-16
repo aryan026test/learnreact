@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { React,useState } from 'react'
 import { useAuth } from '../utils/auth'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -18,9 +18,9 @@ const Login = () => {
     return (
         <div>
             <label>
-                Username:{' '}
+                Username:
                 <input type='text' onChange={(e) =>{setUser(e.target.value)}} />
-            </label>
+            </label>{' '}
             <button onClick={handleLogin}>Login</button>
         </div>
     )
