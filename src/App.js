@@ -19,7 +19,11 @@ const LazyAbout = React.lazy(() => import('./pages/About.js'))
 
 function App() {
   const [ItemsNumber, setItemsNumber] = useState(0)
-  const [CartItems, setCartItems] = useState("")
+  const [CartItems, setCartItems] = useState([{
+    image: '',
+    name: '',
+    price: ''
+  }])
 
   return (
     <AuthProvider>
@@ -37,7 +41,7 @@ function App() {
             <Route path=':userID' element={<UserDetails />}/>
             <Route path='admin' element={<Admin />}/>
           </Route>
-          <Route path='cart' value={ {CartItems, setCartItems} } element={<Cart />}/>
+          <Route path='cart' element={<Cart value={ {CartItems} } />}/>
           <Route path='order-summary' element={<OrderSummary />}/>
           <Route path='*' element={<NoMatch />} />
           <Route path='/profile' element={
