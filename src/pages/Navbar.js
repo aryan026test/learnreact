@@ -21,12 +21,13 @@ function Navbar(prop){
                 display: 'flex'
             }}>
                 <NavLink style={navLinkStyles} to='/cart'><h6>Cart Icon</h6></NavLink>
+                {prop.value!=0 && 
                 <h6 className='textOverCartIcon'>
                     {/*
                         here will be the number of items imported added to the cart
                     */}
                     {prop.value}
-                </h6>
+                </h6>}
             </div>
         </div>
     )

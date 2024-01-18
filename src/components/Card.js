@@ -1,12 +1,20 @@
 function Card(prop){
-    const {view} = prop
-
+    const {view, CartItems, setCartItems} = prop
     const handleClick = (() =>{
         prop.setItemsNumber((prev) =>{
             return prev+1
         })
-        
     })
+
+    const handleCartItems = (() =>{ 
+        setCartItems(CartItems =>[...CartItems, {image: prop.info.img, name: prop.info.text, price: prop.info.price}])
+    })
+
+
+    const handleEvents = ()=>{
+        handleClick()
+        handleCartItems()
+    }
 
     return(
         <div>
@@ -28,7 +36,7 @@ function Card(prop){
                     }}>
                         {prop.info.price}
                     </h3>
-                    <button onClick={handleClick} className="cartIcon" style={{
+                    <button onClick={handleEvents} className="cartIcon" style={{
                         width: "7%",
                         height: "40px"
                     }}>
@@ -42,7 +50,7 @@ function Card(prop){
                     <div className="desc">{prop.info.description}</div>
                     <div className="priceAndIcon">
                         <h4>{prop.info.price}</h4>
-                        <button onClick={handleClick}>Cart Icon</button>
+                        <button onClick={handleEvents}>Cart Icon</button>
                     </div>
                 </div>
             )}

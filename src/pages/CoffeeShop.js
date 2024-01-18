@@ -4,7 +4,7 @@ import Card from '../components/Card'
 
 const CoffeeShop = (prop) => {
   const {value} = prop
-  const {ItemsNumber,setItemsNumber} = value
+  const {ItemsNumber,setItemsNumber, CartItems,  setCartItems} = value
 
   const [toggleView, setToggleView] = useState(false)
 
@@ -36,7 +36,7 @@ const CoffeeShop = (prop) => {
   ]
 
   const CoffeeList = CoffeeInfo.map((element, index)=>{
-    return <Card view={toggleView} ItemsNumber={ItemsNumber} setItemsNumber={setItemsNumber} info={element} key={index} />
+    return <Card view={toggleView} CartItems={CartItems} setCartItems={setCartItems} ItemsNumber={ItemsNumber} setItemsNumber={setItemsNumber} info={element} key={index} />
   })
 
   const ChangeToGrid = ()=>{
