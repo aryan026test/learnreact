@@ -21,7 +21,7 @@ function Navbar(prop){
                 display: 'flex'
             }}>
                 <NavLink style={navLinkStyles} to='/cart'><h6>Cart Icon</h6></NavLink>
-                {prop.value!=0 && 
+                {prop.value!==0 && 
                 <h6 className='textOverCartIcon'>
                     {/*
                         here will be the number of items imported added to the cart

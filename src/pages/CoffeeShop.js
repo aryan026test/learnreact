@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 import Coffee from '../images/expresso.jpg'
+import Americano from '../images/americano.jpg'
+import LongBlack from '../images/long_black.jpg'
+import DoubleEspresso from '../images/double_expresso.jpg'
+import BlackEye from '../images/black_eye.jpg'
 import Card from '../components/Card'
+import { Link } from 'react-router-dom'
 
 const CoffeeShop = (prop) => {
   const {value} = prop
@@ -13,25 +18,43 @@ const CoffeeShop = (prop) => {
       img: Coffee,
       text: "Espresso",
       description: "The espresso, also known as a short black, is approximately 1 oz. of highly concentrated coffee. Although simple in appearance, it can be difficult to master.",
-      price: "5 RS/- ",
+      price: 50,
+      id: 1
     },
     {
-      img: Coffee,
+      img: DoubleEspresso,
       text: "Double Espresso",
       description: "A double espresso may also be listed as doppio, which is the Italian word for double. This drink is highly concentrated and strong.",
-      price: "5 RS/- ",
+      price: 100,
+      id: 2
     },
     {
-      img: Coffee,
-      text: "Expresso",
-      description: "The espresso, also known as a short black, is approximately 1 oz. of highly concentrated coffee. Although simple in appearance, it can be difficult to master.",
-      price: "5 RS/- ",
+      img: Americano,
+      text: "Red Eye",
+      description: "The red eye's purpose is to add a boost of caffeine to your standard cup of coffee",
+      price: 120,
+      id: 3
     },
     {
-      img: Coffee,
-      text: "Expresso",
-      description: "The espresso, also known as a short black, is approximately 1 oz. of highly concentrated coffee. Although simple in appearance, it can be difficult to master.",
-      price: "5 RS/- ",
+      img: BlackEye,
+      text: "Black Eye",
+      description: "The black eye is just the doubled version of the red eye and is very high in caffeine.",
+      price: 5,
+      id: 4
+    },
+    {
+      img: Americano,
+      text: "Americano",
+      description: "Americanos are popular breakfast drinks and thought to have originated during World War II. Soldiers would add water to their coffee to extend their rations farther. The water dilutes the espresso while still maintaining a high level of caffeine",
+      price: 5,
+      id: 5
+    },
+    {
+      img: LongBlack,
+      text: "Long Black",
+      description: "The long black is a similar coffee drink to the americano, but it originated in New Zealand and Australia. It generally has more crema than an americano.",
+      price: 5,
+      id: 6
     },
   ]
 
