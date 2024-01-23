@@ -15,39 +15,39 @@ import Profile from './pages/Profile.js';
 import { AuthProvider } from './utils/auth.js';
 import Login from './pages/Login.js';
 import { RequireAuth } from './utils/RequireAuth.js';
+import CoffeePage from './components/CoffeePage.js';
 const LazyAbout = React.lazy(() => import('./pages/About.js'))
 
 function App() {
   const [ItemsNumber, setItemsNumber] = useState(0)
-  const [CartItems, setCartItems] = useState([{
-    image: '',
-    name: '',
-    price: ''
-  }])
+  const [CartItems, setCartItems] = useState([])
 
   return (
     <AuthProvider>
       <div className='App'>
-        <Navbar value={ ItemsNumber }/>
+        <Navbar value={ItemsNumber} />
         <Routes>
-          <Route path='/' element={<CoffeeShop value={ {ItemsNumber, setItemsNumber, CartItems, setCartItems} }/>} />
+          <Route path='/' element={<CoffeeShop value={{ ItemsNumber, setItemsNumber, CartItems, setCartItems }} />} />
           <Route path='about' element={<React.Suspense fallback='Loading...'><LazyAbout /></React.Suspense>}>
-            <Route index element={<Featured />}/>
-            <Route path='featured' element={<Featured />}/>
-            <Route path='new' element={<NewProducts />}/>
+            <Route index element={<Featured />} />
+            <Route path='featured' element={<Featured />} />
+            <Route path='new' element={<NewProducts />} />
             <Route />
           </Route>
-          <Route path='users' element={<Users />}>
+          <Route path='CoffeePage' element={<CoffeePage />}/>
+          {/* <Route path='users' element={<Users />}>
             <Route path=':userID' element={<UserDetails />}/>
             <Route path='admin' element={<Admin />}/>
-          </Route>
-          <Route path='cart' element={<Cart value={ {CartItems} } />}/>
-          <Route path='order-summary' element={<OrderSummary />}/>
+          </Route> */}
+          {/* <Route path='users' element={<Users />}/> */}
+          <Route path='users/:userID' element={<UserDetails />} />
+          <Route path='cart' element={<Cart value={{ CartItems, setCartItems, setItemsNumber }} />} />
+          <Route path='order-summary' element={<OrderSummary />} />
           <Route path='*' element={<NoMatch />} />
           <Route path='/profile' element={
-          <RequireAuth>
-            <Profile /> 
-          </RequireAuth>
+            <RequireAuth>
+              <Profile />
+            </RequireAuth>
           } />
           <Route path='/login' element={<Login />} />
         </Routes>
