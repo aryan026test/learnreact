@@ -10,8 +10,6 @@ const Cart = (prop) => {
         return <CartElement setItemsNumber={setItemsNumber} setCartItems={setCartItems} CartItems={CartItems} setFinalPrice={setFinalPrice} value={element} key={index} />
     })
 
-    console.log("items", {Items})
-
     return (
         <div>
             {   Items.length === 0 ? 

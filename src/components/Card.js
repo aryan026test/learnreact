@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 
 function Card(prop){
-    const {view, setCartItems} = prop
+    const {view, CartItems, setCartItems,  setPageItems} = prop
     const handleClick = (() =>{
         prop.setItemsNumber((prev) =>{
             return prev+1
@@ -9,8 +9,7 @@ function Card(prop){
     })
 
     const handleCartItems = (() =>{
-        
-        setCartItems(CartItems =>[...CartItems, {image: prop.info.img, name: prop.info.text, price: prop.info.price, id: CartItems.length}])
+        setCartItems(CartItems =>[...CartItems, {image: prop.info.img, name: prop.info.text, price: prop.info.price, productId: prop.info.pId, id: CartItems.length}])
     })
 
 
@@ -19,20 +18,33 @@ function Card(prop){
         handleCartItems()
     }
 
+    const CardItemsToCoffeePage = () =>{
+        let updatedValue = {}
+        updatedValue = {
+            image: prop.info.img,
+            name: prop.info.text,
+            price: prop.info.price,
+            desc : prop.info.description,
+            productId: prop.info.pId,
+            id: CartItems.length
+        }
+        setPageItems(prev =>updatedValue)
+    }
+
     return(
         <div>
             {view ? (
                 <div className="card">
-                    <Link to="/CoffeePage">
+                    <Link to={`/CoffeePage/${prop.info.id}`} onClick={CardItemsToCoffeePage}>
                         <img src={prop.info.img} alt="Log"/>
                     </Link>
                     <div className="textAndDesc">
-                        <Link to='/CoffeePage /:' style={{color: "black"}}>
+                        <Link to={`/CoffeePage/${prop.info.id}`} onClick={CardItemsToCoffeePage} style={{color: "black"}}>
                             <h2>
                                 {prop.info.text}
                             </h2>
                         </Link>
-                        <Link to='/CoffeePage /:' style={{color: "black"}}>
+                        <Link to={`/CoffeePage/${prop.info.id}`} onClick={CardItemsToCoffeePage} style={{color: "black"}}>
                             <p style={{
                                 color: "grey"
                             }}>
@@ -54,7 +66,7 @@ function Card(prop){
                 </div>
             ) : (
                 <div className="grid-item">
-                    <Link style={{color:'black'}} to='/CoffeePage'>
+                    <Link style={{color:'black'}}  onClick={CardItemsToCoffeePage} to={`/CoffeePage/${prop.info.id}`}>
                         <h4>{prop.info.text}</h4>
                         <img src={prop.info.img} alt="coffee here"></img>
                         <div className="desc">{prop.info.description}</div>
