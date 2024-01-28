@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 const CartElement = (prop) => {
-  const { setItemsNumber, setCartItems, CartItems,  setFinalPrice, value } = prop
-  const [show, setShow] = useState(1);
-  const IncreasePrice = () => {
-    setFinalPrice((prev) => prev+value.price)
-  }
-
+  const { setItemsNumber, setCartItems, setFinalPrice, value } = prop
+  // const IncreasePrice = () => {
+  //   setFinalPrice((prev) => prev+value.price)
+  // }
   useEffect(()=>{
-    IncreasePrice()
+    setFinalPrice((prev) => prev+value.price)
+    // eslint-disable-next-line
   },[])
 
   const decreasePrice = (p) => {
@@ -17,16 +16,9 @@ const CartElement = (prop) => {
     })
   }
 
-  // const removeDiv = () => {
-  //   setShow((prev) =>{
-  //     return 0;
-  //   })
-  // }
-
   const handleEvents = () => {
     setItemsNumber((prev) => prev-1)
     decreasePrice(value.price)
-    //cart items mai se value.id wala object remove kar dena hai
     setCartItems((prev)=>{
       let temp = []
       prev.forEach(element => {
@@ -37,8 +29,6 @@ const CartElement = (prop) => {
       return temp
     })
   }
-
-  console.log(value)
 
   return (
     <div>

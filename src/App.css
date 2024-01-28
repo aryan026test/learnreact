@@ -273,3 +273,51 @@ p {
   position: relative;
   margin: auto;
 }
+
+.coffeeClick{
+  display: flex;
+  width: 900px;
+  margin: auto;
+  padding: 20px;
+  gap: 10%;
+}
+
+.coffeeClick img{
+  height: 200px;
+  width: 410px;
+  border: 2px solid black;
+}
+
+.coffeeClick .content{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: large;
+}
+
+.buttons{
+  position: relative;
+  left: 400px;
+  width: 100px;
+  display: flex;
+  justify-content: space-around;
+  text-align: left;
+}
+
+.buttons button{
+  font-size: large;
+  color: white;
+  background-color: black;
+  border: none;
+  border-radius: 5px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttons h3{
+  position: relative;
+  bottom: 18px;
+}
