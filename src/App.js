@@ -13,45 +13,48 @@ import Profile from './pages/Profile.js';
 import { AuthProvider } from './utils/auth.js';
 import Login from './pages/Login.js';
 import { RequireAuth } from './utils/RequireAuth.js';
+import store from './redux/store'
 import CoffeePage from './components/CoffeePage.js';
+import { Provider } from 'react-redux';
 const LazyAbout = React.lazy(() => import('./pages/About.js'))
 
 function App() {
-  const [ItemsNumber, setItemsNumber] = useState(0)
   const [CartItems, setCartItems] = useState([])
   const [pageItems, setPageItems] = useState({})
 
   return (
-    <AuthProvider>
-      <div className='App'>
-        <Navbar value={ItemsNumber} />
-        <Routes>
-          <Route path='/' element={<CoffeeShop value={{ ItemsNumber, setItemsNumber, CartItems, setCartItems, pageItems, setPageItems }} />} />
-          <Route path='about' element={<React.Suspense fallback='Loading...'><LazyAbout /></React.Suspense>}>
-            <Route index element={<Featured />} />
-            <Route path='featured' element={<Featured />} />
-            <Route path='new' element={<NewProducts />}/>
-            <Route />
-          </Route>
-          <Route path='CoffeePage/:id' element={<CoffeePage value={{ ItemsNumber, pageItems, CartItems, setCartItems, setItemsNumber}}/>} />
-          {/* <Route path='users' element={<Users />}>
-            <Route path=':userID' element={<UserDetails />}/>
-            <Route path='admin' element={<Admin />}/>
-          </Route> */}
-          {/* <Route path='users' element={<Users />}/> */}
-          <Route path='users/:userID' element={<UserDetails />} />
-          <Route path='cart' element={<Cart value= {{ CartItems, setCartItems, setItemsNumber }} />} />
-          <Route path='order-summary' element={<OrderSummary />} />
-          <Route path='*' element={<NoMatch />} />
-          <Route path='/profile' element={
-            <RequireAuth>
-              <Profile />
-            </RequireAuth>
-          } />
-          <Route path='/login' element={<Login />} />
-        </Routes>
-      </div>
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <div className='App'>
+          <Navbar />
+          <Routes>
+            <Route path='/' element={<CoffeeShop value={{ CartItems, setCartItems, pageItems, setPageItems }} />} />
+            <Route path='about' element={<React.Suspense fallback='Loading...'><LazyAbout /></React.Suspense>}>
+              <Route index element={<Featured />} />
+              <Route path='featured' element={<Featured />} />
+              <Route path='new' element={<NewProducts />}/>
+              <Route />
+            </Route>
+            <Route path='CoffeePage/:id' element={<CoffeePage value={{ CartItems, setCartItems }}/>} />
+            {/* <Route path='users' element={<Users />}>
+              <Route path=':userID' element={<UserDetails />}/>
+              <Route path='admin' element={<Admin />}/>
+            </Route> */}
+            {/* <Route path='users' element={<Users />}/> */}
+            <Route path='users/:userID' element={<UserDetails />} />
+            <Route path='cart' element={<Cart value= {{ CartItems, setCartItems }} />} />
+            <Route path='order-summary' element={<OrderSummary />} />
+            <Route path='*' element={<NoMatch />} />
+              <Route path='/profile' element={
+                <RequireAuth>
+                <Profile />
+              </RequireAuth>
+            } />
+            <Route path='/login' element={<Login />} />
+          </Routes>
+        </div>
+      </AuthProvider>
+    </Provider>
   );
 }
 

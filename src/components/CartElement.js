@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react'
+import { removeFromCart } from '../redux'
+import { connect } from 'react-redux'
 
 const CartElement = (prop) => {
   const { setItemsNumber, setCartItems, setFinalPrice, value } = prop
@@ -17,7 +19,8 @@ const CartElement = (prop) => {
   }
 
   const handleEvents = () => {
-    setItemsNumber((prev) => prev-1)
+    // setItemsNumber((prev) => prev-1)
+    prop.removeFromCart()
     decreasePrice(value.price)
     setCartItems((prev)=>{
       let temp = []
@@ -42,4 +45,10 @@ const CartElement = (prop) => {
   )
 }
 
-export default CartElement
+const mapDispatchToProp = (dispatch) => {
+  return{
+    removeFromCart: () => dispatch(removeFromCart())
+  }
+}
+
+export default connect(null, mapDispatchToProp)(CartElement)

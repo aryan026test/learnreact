@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { addToCart, removeFromCart } from "../redux";
+import { connect } from "react-redux";
 
 const CoffeePage = (prop) => {
-  const { value } = prop;
-  const { ItemsNumber, pageItems, setCartItems, setItemsNumber } = value;
+  const { value, pageItems } = prop;
+  const { ItemsNumber, setCartItems, setItemsNumber } = value;
   const [ ItemsAdded, setItemsAdded ] = useState(0)
+
+  console.log(prop)
 
   const handleClick = () => {
     setItemsNumber((prev) => {
@@ -26,18 +30,25 @@ const CoffeePage = (prop) => {
 
   const handleEvents = () => {
     setItemsAdded((prev) => prev+1)
-    handleClick();
+    // handleClick();
+    prop.addToCart()
     handleCartItems();
   };
 
   const handleEvents2 = () => {
-    if(ItemsNumber === 0){
+    // if(ItemsNumber === 0){
+    //   return;
+    // }else{
+    //   setItemsNumber((prev) =>{
+    //     return prev-1;
+    //   })
+    // }
+    if(prop.itemsNumber == 0){
       return;
     }else{
-      setItemsNumber((prev) =>{
-        return prev-1;
-      })
+      prop.removeFromCart()
     }
+
 
     setItemsAdded((prev) => prev-1)
 
@@ -79,4 +90,19 @@ const CoffeePage = (prop) => {
   );
 };
 
-export default CoffeePage;
+const mapStateToProps = (state) => {
+  // console.log(state)
+  return{
+    itemsNumber: state.itemNumber,
+    pageItems: state.items.pageItems
+  }
+}
+
+const mapDispatchToProp = (dispatch) => {
+  return{
+    addToCart: () => dispatch(addToCart()),
+    removeFromCart: () => dispatch(removeFromCart())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProp)(CoffeePage);

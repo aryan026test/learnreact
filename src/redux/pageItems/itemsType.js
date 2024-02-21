@@ -1,0 +1,1 @@
+export const SET_PAGE_ITEMS = 'SET_PAGE_ITEMS'

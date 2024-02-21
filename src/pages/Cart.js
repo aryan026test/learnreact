@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import CartElement from '../components/CartElement'
+import { removeFromCart } from '../redux'
+import { connect } from 'react-redux'
 
 const Cart = (prop) => {
     const { value } = prop
@@ -7,7 +9,7 @@ const Cart = (prop) => {
     const [finalPrice, setFinalPrice] = useState(0)
 
     const Items = CartItems.map((element, index) => {
-        return <CartElement setItemsNumber={setItemsNumber} setCartItems={setCartItems} CartItems={CartItems} setFinalPrice={setFinalPrice} value={element} key={index} />
+        return <CartElement setItemsNumber={removeFromCart} setCartItems={setCartItems} CartItems={CartItems} setFinalPrice={setFinalPrice} value={element} key={index} />
     })
 
     return (
@@ -32,4 +34,10 @@ const Cart = (prop) => {
     )
 }
 
-export default Cart
+const mapDispatchToProps = (dispatch) => {
+    return{
+        removeFromCart: () => dispatch(removeFromCart())
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Cart)

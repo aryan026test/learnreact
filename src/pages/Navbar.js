@@ -1,4 +1,6 @@
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { addToCart } from '../redux';
 
 function Navbar(prop){
     const navLinkStyles = ({ isActive }) =>{
@@ -7,7 +9,7 @@ function Navbar(prop){
             textDecoration: isActive ? 'underline' : 'none'
         }
     }
-
+    
     return(
         <div className="nav">
             <div className="nav_cont">
@@ -21,16 +23,28 @@ function Navbar(prop){
                 display: 'flex'
             }}>
                 <NavLink style={navLinkStyles} to='/cart'><h6>Cart Icon</h6></NavLink>
-                {prop.value!==0 && 
+                {prop.itemsNumber!==0 && 
                 <h6 className='textOverCartIcon'>
                     {/*
                         here will be the number of items imported added to the cart
                     */}
-                    {prop.value}
+                    {prop.itemsNumber}
                 </h6>}
             </div>
         </div>
     )
 }
 
-export default Navbar;
+const mapStateToProps = (state) => {
+    return{
+        itemsNumber: state.cart.itemsNumber
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        addToCart: () => dispatch(addToCart())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
