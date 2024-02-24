@@ -3,39 +3,55 @@ import { addToCart, setPageItems } from "../redux";
 import { connect } from "react-redux";
 
 function Card(prop) {
-  const { view, CartItems, setCartItems } = prop;
+  const { view, cartItems, setCartItems } = prop;
 
-  const handleCartItems = () => {
-    setCartItems((CartItems) => [
-      ...CartItems,
-      {
-        image: prop.info.img,
-        name: prop.info.text,
-        price: prop.info.price,
-        productId: prop.info.pId,
-        id: CartItems.length,
-      },
-    ]);
-  };
+  // const handleCartItems = () => {
+  //   setCartItems((CartItems) => [
+  //     ...CartItems,
+  //     {
+  //       image: prop.info.img,
+  //       name: prop.info.text,
+  //       price: prop.info.price,
+  //       productId: prop.info.pId,
+  //       id: CartItems.length,
+  //     },
+  //   ]);
+  // };
 
   const handleEvents = () => {
-    prop.addToCart();
-    handleCartItems();
+    prop.addToCart({
+      image: prop.info.img,
+      name: prop.info.text,
+      price: prop.info.price,
+      productId: prop.info.pId,
+      id: cartItems.length,
+    });
+    // handleCartItems();
   };
 
-  const CardItemsToCoffeePage = () => {
-    let updatedValue = {};
-    updatedValue = {
+  const pageHandler = () => {
+    prop.setPageItems({
       image: prop.info.img,
       name: prop.info.text,
       price: prop.info.price,
       desc: prop.info.description,
       productId: prop.info.pId,
-      id: CartItems.length,
-    };
-    // setPageItems(prev =>updatedValue)
-  };
+      id: cartItems.length,
+    });
+  }
 
+  // const CardItemsToCoffeePage = () => {
+  //   let updatedValue = {};
+  //   updatedValue = {
+  //     image: prop.info.img,
+  //     name: prop.info.text,
+  //     price: prop.info.price,
+  //     desc: prop.info.description,
+  //     productId: prop.info.pId,
+  //     id: CartItems.length,
+  //   };
+  //   // setPageItems(prev =>updatedValue)
+  // };
 
   return (
     <div>
@@ -50,7 +66,7 @@ function Card(prop) {
                 price: prop.info.price,
                 desc: prop.info.description,
                 productId: prop.info.pId,
-                id: CartItems.length,
+                id: cartItems.length,
               });
             }}
           >
@@ -59,14 +75,14 @@ function Card(prop) {
           <div className="textAndDesc">
             <Link
               to={`/CoffeePage/${prop.info.id}`}
-              onClick={CardItemsToCoffeePage}
+              onClick={pageHandler}
               style={{ color: "black" }}
             >
               <h2>{prop.info.text}</h2>
             </Link>
             <Link
               to={`/CoffeePage/${prop.info.id}`}
-              onClick={CardItemsToCoffeePage}
+              onClick={pageHandler}
               style={{ color: "black" }}
             >
               <p
@@ -100,7 +116,7 @@ function Card(prop) {
         <div className="grid-item">
           <Link
             style={{ color: "black" }}
-            onClick={CardItemsToCoffeePage}
+            onClick={pageHandler}
             to={`/CoffeePage/${prop.info.id}`}
           >
             <h4>{prop.info.text}</h4>
@@ -109,7 +125,20 @@ function Card(prop) {
           </Link>
           <div className="priceAndIcon">
             <h4>{prop.info.price} RS/-</h4>
-            <button onClick={handleEvents}>Cart Icon</button>
+            <button
+              onClick={() => {
+                prop.addToCart({
+                  image: prop.info.img,
+                  name: prop.info.text,
+                  price: prop.info.price,
+                  productId: prop.info.pId,
+                  id: prop.cartItems.length,
+                });
+                // handleCartItems();
+              }}
+            >
+              Cart Icon
+            </button>
           </div>
         </div>
       )}
@@ -120,17 +149,19 @@ function Card(prop) {
 const mapStateToProps = (state) => {
   return {
     itemsNumber: state.cart.itemsNumber,
+    cartItems: state.cart.cartItems,
     view: state.view.view,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToCart: () => dispatch(addToCart()),
+    addToCart: (obj) => dispatch(addToCart(obj)),
     setPageItems: (obj) => {
-      console.log(obj)
-      dispatch(setPageItems(obj))
-  }};
+      console.log(obj);
+      dispatch(setPageItems(obj));
+    },
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card);

@@ -3,76 +3,40 @@ import { addToCart, removeFromCart } from "../redux";
 import { connect } from "react-redux";
 
 const CoffeePage = (prop) => {
-  const { value, pageItems } = prop;
-  const { ItemsNumber, setCartItems, setItemsNumber } = value;
-  const [ ItemsAdded, setItemsAdded ] = useState(0)
-
-  console.log(prop)
-
-  const handleClick = () => {
-    setItemsNumber((prev) => {
-      return prev + 1;
-    });
-  };
-
-  const handleCartItems = () => {
-    setCartItems((CartItems) => [
-      ...CartItems,
-      {
-        image: pageItems.image,
-        name: pageItems.name,
-        price: pageItems.price,
-        productId: pageItems.productId,
-        id: CartItems.length,
-      },
-    ]);
-  };
+  const { cartItems, value, pageItems } = prop;
+  const [ItemsAdded, setItemsAdded] = useState(0);
 
   const handleEvents = () => {
-    setItemsAdded((prev) => prev+1)
-    // handleClick();
-    prop.addToCart()
-    handleCartItems();
+    setItemsAdded((prev) => prev + 1);
+    prop.addToCart({
+      image: pageItems.image,
+      name: pageItems.name,
+      price: pageItems.price,
+      productId: pageItems.productId,
+      id: cartItems.length,
+    });
   };
 
   const handleEvents2 = () => {
-    // if(ItemsNumber === 0){
-    //   return;
-    // }else{
-    //   setItemsNumber((prev) =>{
-    //     return prev-1;
-    //   })
-    // }
-    if(prop.itemsNumber == 0){
-      return;
-    }else{
-      prop.removeFromCart()
+    if (ItemsAdded > 0) {
+      if (prop.itemsNumber == 0) {
+        return;
+      } else {
+        prop.removeFromCart(find(cartItems));
+      }
+      setItemsAdded((prev) => prev - 1);
     }
-
-
-    setItemsAdded((prev) => prev-1)
-
-    setCartItems((prev) =>{
-      let temp = []
-      let idToBeRemoved = find(prev)
-      prev.forEach(element => {
-        if(element.id !== idToBeRemoved){
-          temp.push(element)
-        }
-      });
-      return temp
-    })
-  }
+  };
 
   const find = (arr) => {
     let ans = 0;
-    arr.forEach(element => {
-      if(pageItems.productId === element.productId){
-        ans = element.id
+    arr.forEach((element) => {
+      if (pageItems.productId === element.productId) {
+        ans = element.id;
       }
     });
-    return ans
-  }
+    return ans;
+  };
 
   return (
     <div className="coffeeClick">
@@ -91,18 +55,18 @@ const CoffeePage = (prop) => {
 };
 
 const mapStateToProps = (state) => {
-  // console.log(state)
-  return{
+  return {
     itemsNumber: state.itemNumber,
-    pageItems: state.items.pageItems
-  }
-}
+    pageItems: state.items.pageItems,
+    cartItems: state.cart.cartItems,
+  };
+};
 
 const mapDispatchToProp = (dispatch) => {
-  return{
-    addToCart: () => dispatch(addToCart()),
-    removeFromCart: () => dispatch(removeFromCart())
-  }
-}
+  return {
+    addToCart: (obj) => dispatch(addToCart(obj)),
+    removeFromCart: (valueId) => dispatch(removeFromCart(valueId)),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProp)(CoffeePage);

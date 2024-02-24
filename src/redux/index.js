@@ -1,3 +1,5 @@
+export { setFinalPrice } from "./finalPrice/finalPriceAction";
+
 export { setPageItems } from "./pageItems/itemsAction";
 
 export { gridView,listView } from "./view/viewAction";

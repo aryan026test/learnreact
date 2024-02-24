@@ -1,36 +1,21 @@
 import React, { useEffect } from 'react'
-import { removeFromCart } from '../redux'
+import { removeFromCart, setFinalPrice } from '../redux'
 import { connect } from 'react-redux'
 
 const CartElement = (prop) => {
-  const { setItemsNumber, setCartItems, setFinalPrice, value } = prop
-  // const IncreasePrice = () => {
-  //   setFinalPrice((prev) => prev+value.price)
-  // }
+  const { setFinalPrice, value } = prop
   useEffect(()=>{
-    setFinalPrice((prev) => prev+value.price)
+    setFinalPrice(value.price)
     // eslint-disable-next-line
   },[])
 
   const decreasePrice = (p) => {
-    setFinalPrice((prev) => {
-      return prev - p
-    })
+    setFinalPrice(-p)
   }
 
   const handleEvents = () => {
-    // setItemsNumber((prev) => prev-1)
-    prop.removeFromCart()
     decreasePrice(value.price)
-    setCartItems((prev)=>{
-      let temp = []
-      prev.forEach(element => {
-        if(element.id !== value.id){
-          temp.push(element)
-        }
-      });
-      return temp
-    })
+    prop.removeFromCart(value.id)
   }
 
   return (
@@ -45,10 +30,17 @@ const CartElement = (prop) => {
   )
 }
 
-const mapDispatchToProp = (dispatch) => {
+const mapStateToProps = (state) => {
   return{
-    removeFromCart: () => dispatch(removeFromCart())
+    cartItems: state.cart.cartItems
   }
 }
 
-export default connect(null, mapDispatchToProp)(CartElement)
+const mapDispatchToProp = (dispatch) => {
+  return{
+    removeFromCart: (valueId) => dispatch(removeFromCart(valueId)),
+    setFinalPrice: (price) => dispatch(setFinalPrice(price))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProp)(CartElement)

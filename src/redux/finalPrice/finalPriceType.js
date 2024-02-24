@@ -1,0 +1,1 @@
+export const SET_FINAL_PRICE = 'SET_FINAL_PRICE'

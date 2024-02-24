@@ -35,12 +35,7 @@ function App() {
               <Route path='new' element={<NewProducts />}/>
               <Route />
             </Route>
-            <Route path='CoffeePage/:id' element={<CoffeePage value={{ CartItems, setCartItems }}/>} />
-            {/* <Route path='users' element={<Users />}>
-              <Route path=':userID' element={<UserDetails />}/>
-              <Route path='admin' element={<Admin />}/>
-            </Route> */}
-            {/* <Route path='users' element={<Users />}/> */}
+            <Route path='CoffeePage/:id' element={<CoffeePage value={{  setCartItems }}/>} />
             <Route path='users/:userID' element={<UserDetails />} />
             <Route path='cart' element={<Cart value= {{ CartItems, setCartItems }} />} />
             <Route path='order-summary' element={<OrderSummary />} />

@@ -97,8 +97,6 @@ const CoffeeShop = (prop) => {
   //   });
   // };
 
-  console.log(prop.view)
-
   return (
     <div>
       <div>
