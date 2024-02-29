@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import CartElement from '../components/CartElement'
+import { removeFromCart } from '../redux'
+import { connect } from 'react-redux'
 
 const Cart = (prop) => {
-    const { value } = prop
-    const { CartItems, setCartItems, setItemsNumber } = value
-    const [finalPrice, setFinalPrice] = useState(0)
+    const { value, cartItems } = prop
+    const { CartItems, setCartItems } = value
 
-    const Items = CartItems.map((element, index) => {
-        return <CartElement setItemsNumber={setItemsNumber} setCartItems={setCartItems} CartItems={CartItems} setFinalPrice={setFinalPrice} value={element} key={index} />
+    const Items = cartItems.map((element, index) => {
+        return <CartElement setItemsNumber={removeFromCart} setCartItems={setCartItems} CartItems={CartItems}  value={element} key={index} />
     })
+
 
     return (
         <div>
@@ -17,13 +19,13 @@ const Cart = (prop) => {
                     <h2>Sorry Cart is Empty</h2>
                 </div>
                 :
-                <div style={{
+                <div className='cart-page-items' style={{
                     color: 'black'
                 }}>
                     {Items}
-                    {   finalPrice === 0 ? "" : 
+                    {   prop.finalPrice === 0 ? "" : 
                         <div className='finalPrice'>
-                            Total Amount : {finalPrice} RS/-
+                            Total Amount : {prop.finalPrice} RS/-
                         </div>
                     }
                 </div> 
@@ -32,4 +34,17 @@ const Cart = (prop) => {
     )
 }
 
-export default Cart
+const mapStateToProps = (state) => {
+    return{
+        cartItems: state.cart.cartItems,
+        finalPrice: state.finalPrice.finalPrice,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        removeFromCart: () => dispatch(removeFromCart())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
