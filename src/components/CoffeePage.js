@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { addToCart, removeFromCart } from "../redux";
+import React, { useEffect, useState } from "react";
+import { addToCart, removeFromCart, setPageItems } from "../redux";
 import { connect } from "react-redux";
 
 const CoffeePage = (prop) => {
-  const { cartItems, value, pageItems } = prop;
+  const { cartItems, pageItems } = prop;
   const [ItemsAdded, setItemsAdded] = useState(0);
 
   const handleEvents = () => {
@@ -19,7 +19,7 @@ const CoffeePage = (prop) => {
 
   const handleEvents2 = () => {
     if (ItemsAdded > 0) {
-      if (prop.itemsNumber == 0) {
+      if (prop.itemsNumber === 0) {
         return;
       } else {
         prop.removeFromCart(find(cartItems));
@@ -27,6 +27,11 @@ const CoffeePage = (prop) => {
       setItemsAdded((prev) => prev - 1);
     }
   };
+
+  useEffect(()=>{
+    prop.setPageItems(JSON.parse(localStorage.getItem('data')))
+    // eslint-disable-next-line
+  }, [])
 
   const find = (arr) => {
     let ans = 0;
@@ -66,6 +71,9 @@ const mapDispatchToProp = (dispatch) => {
   return {
     addToCart: (obj) => dispatch(addToCart(obj)),
     removeFromCart: (valueId) => dispatch(removeFromCart(valueId)),
+    setPageItems: (obj) => {
+      dispatch(setPageItems(obj));
+    },
   };
 };
 

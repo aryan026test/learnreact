@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Coffee from "../images/expresso.jpg";
 import Americano from "../images/americano.jpg";
 import LongBlack from "../images/long_black.jpg";
 import DoubleEspresso from "../images/double_expresso.jpg";
 import BlackEye from "../images/black_eye.jpg";
 import Card from "../components/Card";
-import { gridView,listView } from "../redux";
+import { gridView, listView } from "../redux";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGripVertical, faList } from "@fortawesome/free-solid-svg-icons";
 
 const CoffeeShop = (prop) => {
   const { value } = prop;
-  const [temp, setTemp] = useState([])
-  const {
-    CartItems,
-    setCartItems,
-    pageItems,
-    setPageItems,
-  } = value;
+  const { CartItems, setCartItems, pageItems, setPageItems } = value;
 
-  const [toggleView, setToggleView] = useState(false);
+  const [toggleView] = useState(false);
 
   const CoffeeInfo = [
     {
@@ -85,42 +81,34 @@ const CoffeeShop = (prop) => {
     );
   });
 
-  // const ChangeToGrid = () => {
-  //   setToggleView((prev) => {
-  //     return false;
-  //   });
-  // };
-
-  // const ChangeToList = () => {
-  //   setToggleView((prev) => {
-  //     return true;
-  //   });
-  // };
-
   return (
     <div>
-      <div>
-        <button onClick={prop.gridView}>Grid View</button>
-        <button onClick={prop.listView}>List View</button>
+      <div className="view-buttons">
+        <button onClick={prop.gridView}>
+          <FontAwesomeIcon icon={faGripVertical} />
+        </button>
+        <button onClick={prop.listView}>
+          <FontAwesomeIcon icon={faList} />
+        </button>
       </div>
-      <div className={prop.view == 'list' ? "" : "Class-grid"}> 
+      <div className={prop.view === "list" ? "" : "Class-grid"}>
         {CoffeeList}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => {
-  return{
-    view: state.view.view
-  }
-}
+  return {
+    view: state.view.view,
+  };
+};
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return{
+const mapDispatchToProps = (dispatch) => {
+  return {
     gridView: () => dispatch(gridView()),
     listView: () => dispatch(listView()),
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoffeeShop);

@@ -1,22 +1,11 @@
 import { Link } from "react-router-dom";
 import { addToCart, setPageItems } from "../redux";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 function Card(prop) {
-  const { view, cartItems, setCartItems } = prop;
-
-  // const handleCartItems = () => {
-  //   setCartItems((CartItems) => [
-  //     ...CartItems,
-  //     {
-  //       image: prop.info.img,
-  //       name: prop.info.text,
-  //       price: prop.info.price,
-  //       productId: prop.info.pId,
-  //       id: CartItems.length,
-  //     },
-  //   ]);
-  // };
+  const { cartItems } = prop;
 
   const handleEvents = () => {
     prop.addToCart({
@@ -26,50 +15,27 @@ function Card(prop) {
       productId: prop.info.pId,
       id: cartItems.length,
     });
-    // handleCartItems();
   };
 
   const pageHandler = () => {
-    prop.setPageItems({
+    const myObject = {
       image: prop.info.img,
       name: prop.info.text,
       price: prop.info.price,
       desc: prop.info.description,
       productId: prop.info.pId,
       id: cartItems.length,
-    });
-  }
+    };
+    prop.setPageItems(JSON.parse(localStorage.getItem("data")));
 
-  // const CardItemsToCoffeePage = () => {
-  //   let updatedValue = {};
-  //   updatedValue = {
-  //     image: prop.info.img,
-  //     name: prop.info.text,
-  //     price: prop.info.price,
-  //     desc: prop.info.description,
-  //     productId: prop.info.pId,
-  //     id: CartItems.length,
-  //   };
-  //   // setPageItems(prev =>updatedValue)
-  // };
+    localStorage.setItem("data", JSON.stringify(myObject));
+  };
 
   return (
     <div>
-      {prop.view == "list" ? (
+      {prop.view === "list" ? (
         <div className="card">
-          <Link
-            to={`/CoffeePage/${prop.info.pId}`}
-            onClick={() => {
-              prop.setPageItems({
-                image: prop.info.img,
-                name: prop.info.text,
-                price: prop.info.price,
-                desc: prop.info.description,
-                productId: prop.info.pId,
-                id: cartItems.length,
-              });
-            }}
-          >
+          <Link to={`/CoffeePage/${prop.info.pId}`} onClick={pageHandler}>
             <img src={prop.info.img} alt="Log" />
           </Link>
           <div className="textAndDesc">
@@ -109,7 +75,7 @@ function Card(prop) {
               height: "40px",
             }}
           >
-            Cart Icon
+            <FontAwesomeIcon className="add_to_cart" icon={faCartShopping} />
           </button>
         </div>
       ) : (
@@ -126,6 +92,7 @@ function Card(prop) {
           <div className="priceAndIcon">
             <h4>{prop.info.price} RS/-</h4>
             <button
+              className="grid-button"
               onClick={() => {
                 prop.addToCart({
                   image: prop.info.img,
@@ -134,10 +101,9 @@ function Card(prop) {
                   productId: prop.info.pId,
                   id: prop.cartItems.length,
                 });
-                // handleCartItems();
               }}
             >
-              Cart Icon
+              <FontAwesomeIcon className="add_to_cart" icon={faCartShopping} />
             </button>
           </div>
         </div>
@@ -158,7 +124,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addToCart: (obj) => dispatch(addToCart(obj)),
     setPageItems: (obj) => {
-      console.log(obj);
       dispatch(setPageItems(obj));
     },
   };
